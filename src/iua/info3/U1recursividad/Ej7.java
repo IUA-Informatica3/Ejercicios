@@ -15,12 +15,17 @@ public class Ej7 {
 
         System.out.println("\uD83D\uDC4D Ingrese Número");
 
-        int numero = in.nextInt();
-        imprimir(numero);
+        //int numero = in.nextInt();
+        // imprimir(numero);
+        imprimir(30324);
     }
 
     static public void imprimir(int n) {
-        System.out.println("/10 " + n/10);
-        System.out.println("%10 " + n%10);
+        if (n < 10) {
+            System.out.print(" " + n);
+            return;
+        }
+        imprimir(n / 10);
+        System.out.print(" " + n % 10);
     }
 }
