@@ -1,9 +1,10 @@
 package iua.info3.U0PilasColas;
 
 import iua.info3.structures.ArrayStack;
+import iua.info3.structures.LinkedStack;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         ArrayStack miPila = new ArrayStack(3);
 
         String txt = "Hola mundo, como andan todos?";
@@ -27,5 +28,20 @@ public class Main {
             System.out.println("Tire bien exce");
         }
 
+        System.out.println("\n\n\n\n\n");
+        print();
     }
+
+    private static void print() throws Exception {
+        LinkedStack<Integer> p = new LinkedStack<>();
+        Integer tmp;
+        for (int n = 0; n < 6; n++) p.push(n);
+        while (!p.isEmpty()) {
+            tmp = p.topAndPop();
+            if (tmp % 2 == 1)
+                p.push(tmp * p.topAndPop());
+            else
+                System.out.println(tmp);
+        }
+    } // 20  6  0
 }

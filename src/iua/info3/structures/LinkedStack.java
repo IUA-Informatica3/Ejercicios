@@ -31,4 +31,8 @@ public class LinkedStack<AnyType> {
     public int getSize() {
         return size;
     }
+
+    public boolean isEmpty() {
+        return cima == null;
+    }
 }

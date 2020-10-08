@@ -95,4 +95,24 @@ public class LinkedList<AnyType> {
         }
         return aux;
     }
+
+
+    public void moverSiguiente(AnyType d) {
+        LinkedNode<AnyType> aux = begin;
+
+
+        while (aux.next != null && !aux.next.data.equals(d)) {
+            aux = aux.next;
+        }
+
+        LinkedNode<AnyType> ant = aux;
+        LinkedNode<AnyType> dato = aux.next;
+        LinkedNode<AnyType> sig = aux.next.next;
+
+        ant.next = sig;
+        if(sig != null) {
+            dato.next = sig.next;
+            sig.next = dato;
+        }
+    }
 }

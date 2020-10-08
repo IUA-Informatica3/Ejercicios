@@ -9,7 +9,6 @@ public class ArrayStack {
         this.index = 0;
         this.size = 10;
         this.stack = new char[10];
-
     }
 
     public ArrayStack(int size) {
