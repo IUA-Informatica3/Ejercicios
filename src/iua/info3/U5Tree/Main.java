@@ -7,14 +7,17 @@ class Main {
     public static void main(String[] args) {
         BinaryTree<Integer> miArbol = new BinaryTree<>();
 
-        miArbol.insert(5);
-        miArbol.insert(2);
-        miArbol.insert(7);
-        miArbol.insert(1);
-        miArbol.insert(4);
-        miArbol.insert(6);
-        miArbol.insert(8);
-        miArbol.insert(3);
+        for (int i = 0; i < 10; i++) {
+            miArbol.insert((int) (Math.random() * 25));
+        }
+
+        miArbol.print();
+
+        try {
+            miArbol.iterInorder();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

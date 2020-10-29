@@ -9,11 +9,10 @@ public class BinaryTree<AnyType extends Comparable<? super AnyType>> {
     }
 
     private BinaryNode<AnyType> insert(AnyType d, BinaryNode<AnyType> node) {
-
         if (node == null)
             return new BinaryNode<>(d);
 
-        int comp = node.data.compareTo(d);
+        int comp = d.compareTo(node.data);
 
         if (comp > 0) {
             node.left = insert(d, node.left);
@@ -121,6 +120,22 @@ public class BinaryTree<AnyType extends Comparable<? super AnyType>> {
         if (r.left != null) {
             print(false, identacion + (esDerecho ? "|    " : "     "), r.left);
         }
+    }
+
+    public void iterInorder() throws Exception {
+        LinkedStack<BinaryNode<AnyType>> st = new LinkedStack<>();
+        BinaryNode<AnyType> curr = root;
+
+        while (curr != null || !st.isEmpty()) {
+            while (curr != null) {
+                st.push(curr);
+                curr = curr.left;
+            }
+            curr = st.topAndPop();
+            System.out.print(curr.data + " ");
+            curr = curr.right;
+        }
+
     }
 
 
