@@ -1,17 +1,16 @@
 package iua.info3.structures;
 
-import java.util.Arrays;
-
-interface HashFunc<TypeKey extends Comparable> {
+interface HashFunc<TypeKey extends Comparable<TypeKey>> {
     int hashFunction(TypeKey key);
 }
 
-public class HashTableOpen<TypeKey extends Comparable, TypeValue> {
+public class HashTableOpen<TypeKey extends Comparable<TypeKey>, TypeValue> {
     AvlTree<HashEntry<TypeKey, TypeValue>>[] table;
     HashFunc<TypeKey> function;
 
+    @SuppressWarnings("unchecked")
     public HashTableOpen(int size, HashFunc<TypeKey> hf) {
-        this.table = new AvlTree[size];
+        table = new AvlTree[size];
         function = hf;
         for (int i = 0; i < table.length; i++) {
             table[i] = new AvlTree<>();
@@ -26,7 +25,7 @@ public class HashTableOpen<TypeKey extends Comparable, TypeValue> {
         return function.hashFunction(key) % table.length;
     }
 
-    public void insert(TypeKey clave, TypeValue value) throws Exception {
+    public void insert(TypeKey clave, TypeValue value){
         int pos = hashFunc(clave);
         table[pos].insert(new HashEntry<>(clave, value));
     }
@@ -36,12 +35,12 @@ public class HashTableOpen<TypeKey extends Comparable, TypeValue> {
         return table[pos].get(new HashEntry<>(clave, null)).value;
     }
 
-    public void remove(TypeKey clave) throws Exception {
+    public void remove(TypeKey clave) {
         int pos = hashFunc(clave);
         table[pos].remove(new HashEntry<>(clave, null));
     }
 
-    private static class HashEntry<TypeKey extends Comparable, TypeValue> implements Comparable<HashEntry> {
+    private static class HashEntry<TypeKey extends Comparable<TypeKey>, TypeValue> implements Comparable<HashEntry<TypeKey, TypeValue>> {
         TypeKey key;
         TypeValue value;
 
@@ -67,7 +66,7 @@ public class HashTableOpen<TypeKey extends Comparable, TypeValue> {
         }
 
         @Override
-        public int compareTo(HashEntry hashEntry) {
+        public int compareTo(HashEntry<TypeKey, TypeValue> hashEntry) {
             return key.compareTo(hashEntry.getKey());
         }
     }
