@@ -2,19 +2,28 @@ package iua.info3.structures;
 
 import java.util.Arrays;
 
+interface HashFunc<TypeKey extends Comparable> {
+    int hashFunction(TypeKey key);
+}
+
 public class HashTableOpen<TypeKey extends Comparable, TypeValue> {
     AvlTree<HashEntry<TypeKey, TypeValue>>[] table;
+    HashFunc<TypeKey> function;
 
-
-    public HashTableOpen(int size) {
+    public HashTableOpen(int size, HashFunc<TypeKey> hf) {
         this.table = new AvlTree[size];
+        function = hf;
         for (int i = 0; i < table.length; i++) {
             table[i] = new AvlTree<>();
         }
     }
 
+    public HashTableOpen(int size) {
+        this(size, (key) -> (int) key);
+    }
+
     private int hashFunc(TypeKey key) {
-        return (int) key % table.length;
+        return function.hashFunction(key) % table.length;
     }
 
     public void insert(TypeKey clave, TypeValue value) throws Exception {
@@ -64,7 +73,12 @@ public class HashTableOpen<TypeKey extends Comparable, TypeValue> {
     }
 
     public static void main(String[] args) {
-        HashTableOpen<Integer, String> miTable = new HashTableOpen<>(7);
+        // HashTableOpen<Integer, String> miTable = new HashTableOpen<>(7);
+
+        HashTableOpen<Integer, String> miTable = new HashTableOpen<>(7,
+                (key) -> {
+                    return key * key * key;
+                });
 
         try {
             miTable.insert(0, "HOLA");
